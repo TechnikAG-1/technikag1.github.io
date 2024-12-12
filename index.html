@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="preload" href="/video.mp4" as="video">
+        <meta charset="UTF-8">
+        <title>Countdown</title>
+        <style>
+            body {
+                background-color: #111111;
+                color: #ffffff;
+                text-align: center;
+                padding-top: 50%;
+                font-size: xx-large;
+                font-family: sans-serif;
+            }
+        </style>
+    </head>
+    <body>
+        <h1 id="countdown">5</h1>
+        <script>
+            let video = "/video.mp4"
+
+            const loadedVideo = document.createElement('video');
+            loadedVideo.preload = 'auto';
+            loadedVideo.src = video;
+            loadedVideo.load();
+
+            function startCooldown(duration) {
+                const timerElement = document.getElementById("countdown");
+                let timeLeft = duration;
+
+                const interval = setInterval(function() {
+                    if (timeLeft > 0) {
+                        timerElement.textContent = timeLeft;
+                        fetch(video, { method: 'GET', mode: 'no-cors' }).catch(err => {console.log(err);});
+                        timeLeft--;
+                    } else {
+                        timerElement.textContent = "Loading...";
+                        window.location.href = video;
+                        clearInterval(interval);
+                    }
+                }, 1000);
+            }
+        startCooldown(4);
+        </script>
+    </body>
+</html>
